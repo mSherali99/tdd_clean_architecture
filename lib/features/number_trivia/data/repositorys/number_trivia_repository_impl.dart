@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:tdd_clean_architecture/core/error/exceptions.dart';
 import 'package:tdd_clean_architecture/core/error/failures.dart';
 import 'package:tdd_clean_architecture/core/network/network_info.dart';
@@ -53,6 +54,7 @@ class NumberTriviaRepositoryImpl implements NumberTriviaRepository {
       _ConcreteOrRandomChooser getConcreteOrRandom,) async {
     if (await networkInfo.isConnected) {
       try {
+        debugPrint("repository in getTrivia yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
         final remoteTrivia = await getConcreteOrRandom();
         localDataSource.cacheNumberTrivia(remoteTrivia);
         return Right(remoteTrivia);

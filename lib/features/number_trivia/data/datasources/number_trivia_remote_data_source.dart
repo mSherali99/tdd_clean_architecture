@@ -1,6 +1,7 @@
 
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:tdd_clean_architecture/core/error/exceptions.dart';
 
@@ -23,10 +24,11 @@ class NumberTriviaRemoteDataSourceImpl implements NumberTriviaRemoteDataSource {
 
   @override
   Future<NumberTriviaModel> getRandomNumber() => 
-      _getTriviaFromUrl(Uri.parse('http://numbersapi.com/#random'));
+      _getTriviaFromUrl(Uri.parse('http://numbersapi.com/random/trivia'));
 
   Future<NumberTriviaModel> _getTriviaFromUrl(Uri uri) async {
     final response = await client.get(uri, headers: {'Content-Type': 'application/json'});
+    debugPrint("${response.statusCode} response statusse code ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss");
     if (response.statusCode == 200) {
       return NumberTriviaModel.fromJson(jsonDecode(response.body));
     } else {

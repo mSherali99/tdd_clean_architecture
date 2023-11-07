@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:tdd_clean_architecture/core/error/failures.dart';
 import 'package:tdd_clean_architecture/features/number_trivia/presentation/utils/input_converter.dart';
@@ -71,14 +72,25 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
       Emitter<NumberTriviaState> emit,
       NumberTriviaState state,
       Either<Failure, NumberTrivia> failureOrSuccess) async {
-    failureOrSuccess.fold(
-      (failure) async => emit(state.copyWith(
+    failureOrSuccess.fold((failure) async {
+      debugPrint("failureeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+      return emit(
+        state.copyWith(
           status: StateStatus.ERROR,
-          errorMessage: _mapFailureMessage(failure))),
-      (trivia) async => emit(state.copyWith(
-          status: StateStatus.LOADER,
-          number: trivia.number,
-          text: trivia.text)),
-    );
+          errorMessage: _mapFailureMessage(failure),
+        ),
+      );
+    }, (trivia) async {
+      debugPrint(
+          "${trivia.number} trivia number success nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
+      debugPrint(
+          "${trivia.text} trivia text success tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt");
+      return emit(
+        state.copyWith(
+            status: StateStatus.LOADED,
+            number: trivia.number,
+            text: trivia.text),
+      );
+    });
   }
 }
